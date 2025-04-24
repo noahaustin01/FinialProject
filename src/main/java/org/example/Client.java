@@ -16,6 +16,8 @@ import java.util.logging.Logger;
  */
 public class Client {
 
+    static User me;
+
     public static void main(String[] args) {
 
         try {
@@ -32,6 +34,8 @@ public class Client {
 
             System.out.println("Enter your username to start chatting:");
             String username = in.nextLine();
+
+            me = new User(username);
 
             bufferedWriter.write(username);
             bufferedWriter.newLine();
