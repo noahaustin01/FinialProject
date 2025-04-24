@@ -1,6 +1,8 @@
 package org.group.common;
 
-public class Message {
+import java.io.Serializable;
+
+public class Message implements Serializable {
     final User author;
     private User[] to;
     final String content;

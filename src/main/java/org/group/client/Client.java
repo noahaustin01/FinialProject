@@ -1,5 +1,6 @@
 package org.group.client;
 
+import org.group.common.Message;
 import org.group.common.User;
 
 import java.io.BufferedReader;
@@ -48,11 +49,12 @@ public class Client {
             listenForIncomingMessages(socket, bufferedReader);
 
             while (!socket.isClosed()) {
-                String messageToSend = in.nextLine();
-                bufferedWriter.write(messageToSend);
+                Message messageToSend = new Message(me, in.next());
+                String messageToSendOld = in.nextLine();
+                bufferedWriter.write(messageToSendOld);
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
-                if (messageToSend.equalsIgnoreCase("exit")) {
+                if (messageToSendOld.equalsIgnoreCase("exit")) {
                     closeConnection(bufferedReader, bufferedWriter, socket);
                     break;
                 }
