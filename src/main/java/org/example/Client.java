@@ -20,7 +20,7 @@ public class Client {
 
         try {
             //Establish socket connection to server
-            Socket socket = new Socket("localhost", 6000);
+            Socket socket = new Socket("10.53.2.212", 6000);
 
             //instantiates the input and output stream
 
