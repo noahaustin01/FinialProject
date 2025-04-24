@@ -1,4 +1,4 @@
-package org.example;
+package org.group.common;
 
 public class Message {
     final User author;

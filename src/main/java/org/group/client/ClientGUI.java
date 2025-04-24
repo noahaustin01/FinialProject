@@ -1,3 +1,5 @@
+package org.group.client;
+
 import javax.swing.*;
 import javax.swing.GroupLayout;
 /*
