@@ -71,7 +71,7 @@ public class FinalProGUI extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         TxtAMsg = new javax.swing.JTextArea();
         BtnConnect = new javax.swing.JButton();
-        BtnNewChat = new javax.swing.JButton();
+        BtnPrivateChat = new javax.swing.JButton();
 
         jLabel3.setText("jLabel3");
 
@@ -157,13 +157,13 @@ public class FinalProGUI extends javax.swing.JFrame {
             }
         });
 
-        BtnNewChat.setBackground(new java.awt.Color(0, 0, 0));
-        BtnNewChat.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        BtnNewChat.setForeground(new java.awt.Color(255, 255, 255));
-        BtnNewChat.setText("Private chat");
-        BtnNewChat.addActionListener(new java.awt.event.ActionListener() {
+        BtnPrivateChat.setBackground(new java.awt.Color(0, 0, 0));
+        BtnPrivateChat.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        BtnPrivateChat.setForeground(new java.awt.Color(255, 255, 255));
+        BtnPrivateChat.setText("Private chat");
+        BtnPrivateChat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnNewChatActionPerformed(evt);
+                BtnPrivateChatActionPerformed(evt);
             }
         });
 
@@ -200,7 +200,7 @@ public class FinalProGUI extends javax.swing.JFrame {
                                         .addComponent(BtnSend)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(BtnNewChat)
+                                            .addComponent(BtnPrivateChat)
                                             .addComponent(BtnLeaveChat)))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -227,7 +227,7 @@ public class FinalProGUI extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(BtnConnect)
                         .addGap(69, 69, 69)
-                        .addComponent(BtnNewChat)
+                        .addComponent(BtnPrivateChat)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BtnLeaveChat)
@@ -297,12 +297,13 @@ public class FinalProGUI extends javax.swing.JFrame {
 
     private void BtnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSendActionPerformed
         // TODO add your handling code here:
-//        This section calls the sendMessage method to send messages to the chat
+//        This section calls the sendMessage method it allows you to send to 
         sendMessage();
     }//GEN-LAST:event_BtnSendActionPerformed
 
     private void BtnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConnectActionPerformed
         // TODO add your handling code here:
+//      this allows you to connect to the server and message others
         try {
             connectToServer();
             BtnConnect.setText("Connected");
@@ -312,12 +313,13 @@ public class FinalProGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BtnConnectActionPerformed
 
-    private void BtnNewChatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNewChatActionPerformed
+    private void BtnPrivateChatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPrivateChatActionPerformed
         // TODO add your handling code here:
+//      This opens a new screen to make a private chat
         this.setVisible(false);
         MakeNewChat newChat = new MakeNewChat(this);
         newChat.setVisible(true);
-    }//GEN-LAST:event_BtnNewChatActionPerformed
+    }//GEN-LAST:event_BtnPrivateChatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -359,7 +361,7 @@ public class FinalProGUI extends javax.swing.JFrame {
     private javax.swing.JButton BtnConnect;
     private javax.swing.JButton BtnExit;
     private javax.swing.JButton BtnLeaveChat;
-    private javax.swing.JButton BtnNewChat;
+    private javax.swing.JButton BtnPrivateChat;
     private javax.swing.JButton BtnSend;
     private javax.swing.JTextArea TxtAMsg;
     private javax.swing.JTextArea TxtARes;
@@ -376,17 +378,18 @@ public class FinalProGUI extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 public void connectToServer() {
-        try {
+//        This connects to the server and makes you enter your username to be identified, then it listens for messeges on a seprate thread
+    try {
             socket = new Socket("10.53.2.212", 6000);
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
-            username = JOptionPane.showInputDialog(this, "Enter your username:");
+            username = JOptionPane.showInputDialog(this, "Enter the name you would like to be seen as:");
             writer.write(username);
             writer.newLine();
             writer.flush();
 
-            TxtARes.append("You are now connected as " + username + "\n");
+            TxtAMsg.append("You are now connected as " + username + "\n");
 
             listenForMessages();
 
@@ -396,11 +399,12 @@ public void connectToServer() {
     }
 
     public void listenForMessages() {
+//        This method listens for incomming messegs and displayes them
         new Thread(() -> {
             try {
                 String message;
                 while ((message = reader.readLine()) != null) {
-                    TxtARes.append(message + "\n");
+                    TxtAMsg.append(message + "\n");
                 }
             } catch (IOException e) {
                 System.out.println(e);
@@ -409,7 +413,8 @@ public void connectToServer() {
     }
 
     public void sendMessage() {
-        String message = TxtAMsg.getText();
+//        This method gets your messega from the text area and sends it to the chat
+        String message = TxtARes.getText();
         if (message.isEmpty()) {
             return;
         }
@@ -419,8 +424,8 @@ public void connectToServer() {
             writer.newLine();
             writer.flush();
 
-            TxtARes.append("You: " + message + "\n");
-            TxtAMsg.setText("");
+            TxtAMsg.append("You: " + message + "\n");
+            TxtARes.setText("");
 
             if (message.equalsIgnoreCase("exit")) {
                 closeConnection();
@@ -431,6 +436,7 @@ public void connectToServer() {
     }
 
     public void closeConnection() {
+//        This disconnects from the server
         try {
             writer.close();
             reader.close();
