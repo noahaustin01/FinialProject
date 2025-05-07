@@ -1,8 +1,10 @@
 package org.group.server;
 
-
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,6 +18,9 @@ class ChatClientHandler implements Runnable {
     BufferedReader bufferedReader;
     BufferedWriter bufferedWriter;
     String username;
+    ArrayList<String[]> groups = new ArrayList<>();
+    String[] groupmembers;
+
 
     public ChatClientHandler(Socket s) {
         try {
@@ -84,6 +89,9 @@ class ChatClientHandler implements Runnable {
 
         if (isAtMessageReceived(split_message[0])) {
             to_user = checkAtWhoMessage(split_message[0]);
+            if (to_user.equalsIgnoreCase("Group")) {
+                groupmembers = findGroup(split_message[1]);
+            }
             System.out.println("Message sending to " + to_user);
         }
             switch (to_user) {
@@ -94,19 +102,42 @@ class ChatClientHandler implements Runnable {
 //              loop through the clientsLists and send message to the clients except the sender
                     for (ChatClientHandler client : MainServer.clientsList) {
                         try {
-//                skip the sender
-                            if (client.username.equals(username)) {
-                                continue;
+//                 send the message to the client if it is not the person sending
+                            if (!client.username.equals(username)) {
+                                client.bufferedWriter.write(messageFromClient);
+                                client.bufferedWriter.newLine();
+                                client.bufferedWriter.flush();
                             }
-//                send the message to the client
-                            client.bufferedWriter.write(messageFromClient);
-                            client.bufferedWriter.newLine();
-                            client.bufferedWriter.flush();
+
                         } catch (IOException ex) {
                             Logger.getLogger(ChatClientHandler.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 }
+                case "Group" -> {
+                    System.out.println("looking at a group: " + groupmembers.toString());
+                    for (String member : groupmembers) {
+                        System.out.println("member: " + member);
+                        for (ChatClientHandler client : MainServer.clientsList) {
+                            try {
+//                 send the message to the client if it is not the person sending
+                                if (!client.username.equals(member)) {
+                                    client.bufferedWriter.write(messageFromClient);
+                                    client.bufferedWriter.newLine();
+                                    client.bufferedWriter.flush();
+                                }
+
+                                } catch (IOException ex) {
+                                    Logger.getLogger(ChatClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                }
+
+                case "Makegroup" -> {
+                    makeGroup(split_message);
+                }
+
                 default -> {
                     for (ChatClientHandler client : MainServer.clientsList) {
                         try {
@@ -128,16 +159,50 @@ class ChatClientHandler implements Runnable {
         }
     }
 
+    private void makeGroup(String[] people) {
+        String groupname = people[1];
+        String[] members = Arrays.copyOfRange(people, 2, people.length);
 
+//        System.out.println("group name : " + groupname);
+        String[] group = Arrays.copyOf(members, members.length + 1);
+        for (int i = 0; i < group.length-1; i++) {
+//            System.out.println("member: " + group[i+1]);
+            group[i+1] = group[i];
+        }
+        group[0] = groupname;
+
+        groups.add(group);
+
+        System.out.println("New group made");
+    }
+
+    private String[] findGroup(String groupname) {
+        String[] groupmembers = null;
+        System.out.println("looking for the group: " + groupname);
+        for (String[] group : groups) {
+            System.out.println(group[0]);
+            if (group[0].equalsIgnoreCase(groupname)) {
+                System.out.println("found group");
+                groupmembers = Arrays.copyOfRange(group, 1, group.length);
+            }
+        }
+        return groupmembers;
+    }
+
+    // This function will check to see who the incoming message is being sent to
     private String checkAtWhoMessage(String s) {
 
         s = s.substring(1);
-        System.out.println(s + " is who I am sending to");
+//        System.out.println(s + " is who I am sending to");
 
         if (s.equalsIgnoreCase("All")){
             return "All";
         } else if (s.equalsIgnoreCase("Server")) {
             return "Server";
+        } else if (s.equalsIgnoreCase("Group")) {
+            return "Group";
+        } else if (s.equalsIgnoreCase("Makegroup")) {
+            return "Makegroup";
         }
 
         for (ChatClientHandler client : MainServer.clientsList) {

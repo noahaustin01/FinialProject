@@ -1,7 +1,9 @@
 package org;
 
+import org.group.server.MainServer;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
+        MainServer mainServer = new MainServer();
     }
 }

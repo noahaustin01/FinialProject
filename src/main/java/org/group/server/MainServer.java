@@ -1,7 +1,7 @@
 package org.group.server;
 
 
-import org.example.ChatClientHandler;
+//import org.group.server.ChatClientHandler;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -18,10 +18,12 @@ public class MainServer {
     static ArrayList<ChatClientHandler> clientsList;
 
 
-    public static void main(String[] args) throws IOException {
+    public MainServer() {
+        ServerSocket serverSocket;
+        try {
+            //creates a serversocket connection at port 6000
+            serverSocket = new ServerSocket(6000);
 
-        //creates a serversocket connection at port 6000
-        ServerSocket serverSocket= new ServerSocket(6000);
 
         //instantiates the arraylist
         clientsList= new ArrayList<>();
@@ -41,6 +43,9 @@ public class MainServer {
             //add the client to the arraylist
             clientsList.add(cch);
 
+        }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
     }

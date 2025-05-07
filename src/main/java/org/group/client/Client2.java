@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author babafemi.sorinolu
  */
-public class Client {
+public class Client2 {
 
     static User me;
 
