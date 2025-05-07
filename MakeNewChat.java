@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package org.group.client;
+package edu.houghton.csci218.finalproject;
 
 import javax.swing.JOptionPane;
 
@@ -11,11 +11,12 @@ import javax.swing.JOptionPane;
  * @author jesse
  */
 public class MakeNewChat extends javax.swing.JFrame {
+
     FinalProGUI mainScreen;
+
     /**
      * Creates new form MakeNewChat
      */
-    
     public MakeNewChat() {
         initComponents();
     }
@@ -70,7 +71,7 @@ public class MakeNewChat extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setText("name of contact");
+        jLabel2.setText("Name of contact");
 
         jTextField1.setBackground(new java.awt.Color(0, 0, 0));
         jTextField1.setForeground(new java.awt.Color(255, 255, 255));
@@ -139,6 +140,7 @@ public class MakeNewChat extends javax.swing.JFrame {
 
     private void BtnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExitActionPerformed
         // TODO add your handling code here:
+//        This section confirms that you what to exit
         int res = JOptionPane.showConfirmDialog(rootPane, "This will exit the application would you like to continue?");
         if (res == JOptionPane.YES_OPTION) {
             this.dispose();
@@ -149,6 +151,7 @@ public class MakeNewChat extends javax.swing.JFrame {
 
     private void BtnExitToMainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExitToMainActionPerformed
         // TODO add your handling code here:
+//        This section confirms that you what to exit to the main screen
         int res = JOptionPane.showConfirmDialog(rootPane, "This will exit the application would you like to continue?");
         if (res == JOptionPane.YES_OPTION) {
             this.dispose();
