@@ -23,11 +23,13 @@ public class FinalProAI extends javax.swing.JFrame {
     
     public FinalProAI() {
         initComponents();
+        TxtAResAI1.setEditable(false);
     }
 
     public FinalProAI(FinalProGUI mainScreen) {
         this.mainScreen = mainScreen;
         initComponents();
+        TxtAResAI1.setEditable(false);
     }
 
     /**
@@ -40,19 +42,24 @@ public class FinalProAI extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
+        TxtAResAI = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         BtnAIExit = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        TxtAIProm = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TAreaAIRes = new javax.swing.JTextArea();
+        TxtAProm = new javax.swing.JTextArea();
         BtnSendAI = new javax.swing.JButton();
         BtnDelAIRes = new javax.swing.JButton();
         BtnExitToMain = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        TxtAResAI1 = new javax.swing.JTextArea();
 
         jLabel2.setText("jLabel2");
+
+        TxtAResAI.setBackground(new java.awt.Color(0, 0, 0));
+        TxtAResAI.setForeground(new java.awt.Color(255, 255, 255));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,17 +81,14 @@ public class FinalProAI extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Enter your message");
 
-        TxtAIProm.setBackground(new java.awt.Color(0, 0, 0));
-        TxtAIProm.setForeground(new java.awt.Color(255, 255, 255));
-
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Response will appear here");
 
-        TAreaAIRes.setBackground(new java.awt.Color(0, 0, 0));
-        TAreaAIRes.setColumns(20);
-        TAreaAIRes.setForeground(new java.awt.Color(255, 255, 255));
-        TAreaAIRes.setRows(5);
-        jScrollPane1.setViewportView(TAreaAIRes);
+        TxtAProm.setBackground(new java.awt.Color(0, 0, 0));
+        TxtAProm.setColumns(20);
+        TxtAProm.setForeground(new java.awt.Color(255, 255, 255));
+        TxtAProm.setRows(5);
+        jScrollPane1.setViewportView(TxtAProm);
 
         BtnSendAI.setBackground(new java.awt.Color(0, 0, 0));
         BtnSendAI.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -116,6 +120,12 @@ public class FinalProAI extends javax.swing.JFrame {
             }
         });
 
+        TxtAResAI1.setBackground(new java.awt.Color(0, 0, 0));
+        TxtAResAI1.setColumns(20);
+        TxtAResAI1.setForeground(new java.awt.Color(255, 255, 255));
+        TxtAResAI1.setRows(5);
+        jScrollPane2.setViewportView(TxtAResAI1);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -123,6 +133,7 @@ public class FinalProAI extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -131,17 +142,16 @@ public class FinalProAI extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(BtnExitToMain, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(BtnDelAIRes, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BtnSendAI)
-                        .addGap(0, 127, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(164, 164, 164)
                         .addComponent(BtnAIExit))
-                    .addComponent(TxtAIProm))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BtnSendAI)
+                        .addGap(0, 127, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -156,8 +166,8 @@ public class FinalProAI extends javax.swing.JFrame {
                     .addComponent(BtnExitToMain)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtAIProm, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(BtnDelAIRes))
@@ -214,7 +224,7 @@ public class FinalProAI extends javax.swing.JFrame {
         // TODO add your handling code here:
         
 //      This deletes the AI's responce 
-        TAreaAIRes.setText("");
+        TxtAResAI1.setText("");
 
     }//GEN-LAST:event_BtnDelAIResActionPerformed
 
@@ -222,17 +232,17 @@ public class FinalProAI extends javax.swing.JFrame {
         // TODO add your handling code here:
         
 //      This section gives the sends your promt to the AI, it also saves your promts and the AI's responces to allow for a conversation 
-        history.add("User: " + TxtAIProm.getText());
+        history.add("User: " + TxtAProm.getText());
         String allProms = String.join("\n", history);
         String[] key = {"llama3.2", allProms};
-        TxtAIProm.setText("");
+        TxtAProm.setText("");
         String res = FinalProConAi.sendPOST(key);
-        System.out.println(history);
-        System.out.println("LLM Response: " + res);
+//        System.out.println(history);
+//        System.out.println("LLM Response: " + res);
         JSONObject jsonObject = new JSONObject(res);
         String texts = jsonObject.getString("response");
         history.add("AI: " + jsonObject.getString("response"));
-        TAreaAIRes.setText(texts);
+        TxtAResAI1.setText(texts);
     }//GEN-LAST:event_BtnSendAIActionPerformed
 
     /**
@@ -275,13 +285,15 @@ public class FinalProAI extends javax.swing.JFrame {
     private javax.swing.JButton BtnDelAIRes;
     private javax.swing.JButton BtnExitToMain;
     private javax.swing.JButton BtnSendAI;
-    private javax.swing.JTextArea TAreaAIRes;
-    private javax.swing.JTextField TxtAIProm;
+    private javax.swing.JTextArea TxtAProm;
+    private javax.swing.JTextField TxtAResAI;
+    private javax.swing.JTextArea TxtAResAI1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

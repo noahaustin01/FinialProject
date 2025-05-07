@@ -22,7 +22,7 @@ import org.apache.http.impl.client.HttpClients;
 public class FinalProConAi {
 
     public static String sendPOST(String[] keys) {
-//  This file allows for a connection to be made with Ollama as well as outlineing paramaters for json objects      
+//  This file allows for a connection to be made with Ollama as well as outlining paramaters for json objects      
         // Create a new HTTP client instance
         CloseableHttpClient httpClient = HttpClients.createDefault();
 

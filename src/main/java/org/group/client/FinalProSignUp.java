@@ -197,6 +197,7 @@ public class FinalProSignUp extends javax.swing.JFrame {
 
     private void BtnExitSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExitSignUpActionPerformed
         // TODO add your handling code here:
+//        This section confirms that you want to exit
         int res = JOptionPane.showConfirmDialog(rootPane, "This will exit the application would you like to continue?");
         if (res == JOptionPane.YES_OPTION) {
             this.dispose();
@@ -207,8 +208,8 @@ public class FinalProSignUp extends javax.swing.JFrame {
 
     private void BtnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSignUpActionPerformed
         // TODO add your handling code here:
-        
-//        This section checks to make sure that your password is secure enough it also saves it to a file for future use 
+
+//      This section checks to make sure that your password is secure enough it also saves it to a file for future use 
         String letts;
         boolean hasCap = false;
         boolean hasNum = false;
@@ -244,8 +245,7 @@ public class FinalProSignUp extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "The passwords do not match, try again!");
                     TxtSetPass.setText("");
                     TxtConfirmPass.setText("");
-                }
-                else {
+                } else {
                     JOptionPane.showMessageDialog(null, "that password needs at least one capital and one number, try again!");
                     TxtSetPass.setText("");
                     TxtConfirmPass.setText("");

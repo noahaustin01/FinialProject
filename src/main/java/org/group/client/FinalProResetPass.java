@@ -199,6 +199,7 @@ public class FinalProResetPass extends javax.swing.JFrame {
 
     private void BtnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExitActionPerformed
         // TODO add your handling code here:
+//        This section confirms that you want to exit
         int res = JOptionPane.showConfirmDialog(rootPane, "This will exit the application would you like to continue?");
         if (res == JOptionPane.YES_OPTION) {
             this.dispose();
@@ -209,7 +210,7 @@ public class FinalProResetPass extends javax.swing.JFrame {
 
     private void BtnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnResetActionPerformed
         // TODO add your handling code here:
-        
+
 //        This section checks to make sure that your password is secure enough it also saves it to a file for future use 
         String letts;
         boolean hasCap = false;

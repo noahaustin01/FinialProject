@@ -34,12 +34,24 @@ public class FinalProGUI extends javax.swing.JFrame {
     private BufferedReader reader;
     private BufferedWriter writer;
     private Socket socket;
+    MakeNewChat PChat;
 
     /**
      * Creates new form FinalProGUI
      */
     public FinalProGUI() {
+//        MakeNewChat chat = new MakeNewChat();
+//        chat.setVisible(false);
         initComponents();
+        TxtAMsg.setEditable(false);
+
+    }
+
+    public FinalProGUI(MakeNewChat PChat) {
+//        MakeNewChat chat = new MakeNewChat();
+//        chat.setVisible(false);
+        initComponents();
+        this.PChat = PChat;
         TxtAMsg.setEditable(false);
 
     }
@@ -279,7 +291,10 @@ public class FinalProGUI extends javax.swing.JFrame {
 //        This section closes the app after confirming your choice, it also disconects from the AI and the chat server  
         int res = JOptionPane.showConfirmDialog(rootPane, "This will exit the application would you like to continue?");
         if (res == JOptionPane.YES_OPTION) {
-            session.disconnect();
+            if (session != null) {
+                session.disconnect();
+            }
+
             this.dispose();
             closeConnection();
         } else {
@@ -292,7 +307,10 @@ public class FinalProGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
 
 //        This allows you to exit the chat if you want
-        closeConnection();
+        if (writer != null && reader != null && socket!= null) {
+            closeConnection();
+        }
+
     }//GEN-LAST:event_BtnLeaveChatActionPerformed
 
     private void BtnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSendActionPerformed
@@ -314,9 +332,15 @@ public class FinalProGUI extends javax.swing.JFrame {
 
     private void BtnNewChatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNewChatActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
-        MakeNewChat newChat = new MakeNewChat(this);
-        newChat.setVisible(true);
+//        This first makes sure that you want to exit the mainscreen, then opes the seprate app to make a private app
+        int res = JOptionPane.showConfirmDialog(rootPane, "This will exit the mainscreen, would you like to continue?");
+        if (res == JOptionPane.YES_OPTION) {
+            this.setVisible(false);
+            MakeNewChat newChat = new MakeNewChat(this);
+            newChat.setVisible(true);
+            this.dispose();
+        }
+
     }//GEN-LAST:event_BtnNewChatActionPerformed
 
     /**
@@ -376,19 +400,24 @@ public class FinalProGUI extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 public void connectToServer() {
+//      This method connects the server, has you enter a username and then listens for messages 
         try {
             socket = new Socket("10.53.2.212", 6000);
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
-            username = JOptionPane.showInputDialog(this, "Enter your username:");
-            writer.write(username);
-            writer.newLine();
-            writer.flush();
+            username = JOptionPane.showInputDialog(this, "Enter the name you would like to be seen as:");
+            if (username.equals("")) {
+                username = JOptionPane.showInputDialog(this, "You need a name try again.");
+            } else {
+                writer.write(username);
+                writer.newLine();
+                writer.flush();
 
-            TxtARes.append("You are now connected as " + username + "\n");
+                TxtAMsg.append("You are now connected as " + username + "\n");
 
-            listenForMessages();
+                listenForMessages();
+            }
 
         } catch (IOException e) {
             System.out.println(e);
@@ -396,11 +425,12 @@ public void connectToServer() {
     }
 
     public void listenForMessages() {
+//      This method opens a new thread and listens for messages
         new Thread(() -> {
             try {
                 String message;
                 while ((message = reader.readLine()) != null) {
-                    TxtARes.append(message + "\n");
+                    TxtAMsg.append(message + "\n");
                 }
             } catch (IOException e) {
                 System.out.println(e);
@@ -409,18 +439,22 @@ public void connectToServer() {
     }
 
     public void sendMessage() {
-        String message = TxtAMsg.getText();
+//      This method gets the users message and sends it, it checks if there is a private chat open
+        String message = TxtARes.getText();
         if (message.isEmpty()) {
             return;
         }
-
+        if (PChat != null && PChat.person != null && !message.isEmpty()) {
+            message = "@" + PChat.person + " " + message;
+        }
         try {
+
             writer.write(message);
             writer.newLine();
             writer.flush();
 
-            TxtARes.append("You: " + message + "\n");
-            TxtAMsg.setText("");
+            TxtAMsg.append("You: " + message + "\n");
+            TxtARes.setText("");
 
             if (message.equalsIgnoreCase("exit")) {
                 closeConnection();
@@ -431,11 +465,13 @@ public void connectToServer() {
     }
 
     public void closeConnection() {
+//      This method closes the connection a disconnects 
         try {
             writer.close();
             reader.close();
             socket.close();
-            System.exit(0);
+            BtnConnect.setText("Connect to chat");
+            TxtAMsg.setText("");
         } catch (IOException e) {
             System.out.println(e);
         }
