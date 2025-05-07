@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package edu.houghton.csci218.finalproject;
+package org.group.client;
 
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;

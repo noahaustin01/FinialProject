@@ -2,12 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package edu.houghton.csci218.finalproject;
+package org.group.client;
 
 import java.util.ArrayList;
-import javax.security.auth.callback.ConfirmationCallback;
 import javax.swing.JOptionPane;
-import netscape.javascript.JSObject;
+
 import org.json.JSONObject;
 
 /**

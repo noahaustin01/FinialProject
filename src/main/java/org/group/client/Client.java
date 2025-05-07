@@ -1,8 +1,5 @@
 package org.group.client;
 
-import org.group.common.Message;
-import org.group.common.User;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -19,8 +16,6 @@ import java.util.logging.Logger;
  */
 public class Client {
 
-    static User me;
-
     public static void main(String[] args) {
 
         try {
@@ -35,9 +30,8 @@ public class Client {
                     throw new RuntimeException(ex);
                 }
             }
-
+            
             //instantiates the input and output stream
-
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
@@ -47,8 +41,6 @@ public class Client {
             System.out.println("Enter your username to start chatting:");
             String username = in.nextLine();
 
-            me = new User(username);
-
             bufferedWriter.write(username);
             bufferedWriter.newLine();
             bufferedWriter.flush();
@@ -56,20 +48,19 @@ public class Client {
             System.out.println("You are now connected!");
 
             listenForIncomingMessages(socket, bufferedReader);
-
+//          makes sure that the program stays running unless closed
             while (!socket.isClosed()) {
-                Message messageToSend = new Message(me, in.next());
-                String messageToSendOld = in.nextLine();
-                bufferedWriter.write(messageToSendOld);
+                String messageToSend = in.nextLine();
+                bufferedWriter.write(messageToSend);
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
-                if (messageToSendOld.equalsIgnoreCase("exit")) {
+                if (messageToSend.equalsIgnoreCase("exit")) {
                     closeConnection(bufferedReader, bufferedWriter, socket);
                     break;
                 }
             }
 
-//            exit the program
+//          exit the program
             System.exit(0);
             System.out.println("program ended");
         } catch (IOException ex) {
@@ -97,7 +88,7 @@ public class Client {
                 while (!socket.isClosed()) {
                     try {
                         String messageFromServer = bufferedReader.readLine();
-                        if(messageFromServer!=null){
+                        if (messageFromServer != null) {
                             System.out.println(messageFromServer);
                         }
                     } catch (IOException ex) {
@@ -106,7 +97,7 @@ public class Client {
             }
         };
 
-        Thread thread= new Thread(runnable);
+        Thread thread = new Thread(runnable);
         thread.start();
     }
 
