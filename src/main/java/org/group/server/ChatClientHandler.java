@@ -101,13 +101,13 @@ class ChatClientHandler implements Runnable {
         }
             switch (to_user) {
                 // case @All is used in the case that some sends a message with to everyone
-                case "@All" -> {
+                case "All" -> {
 //              loop through the clientsLists and send message to the clients except the sender
                     for (ChatClientHandler client : MainServer.clientsList) {
                         try {
 //                 send the message to the client if it is not the person sending
                             if (!client.username.equals(username)) {
-                                client.bufferedWriter.write(s_m[0] + message);
+                                client.bufferedWriter.write(s_m[0] + ":" + message);
                                 client.bufferedWriter.newLine();
                                 client.bufferedWriter.flush();
                             }
@@ -117,6 +117,7 @@ class ChatClientHandler implements Runnable {
                         }
                     }
                 }
+
                 // case Group will send the incoming message to all the members of a particular group
                 case "Group" -> {
 //                    System.out.println("looking at a group: " + groupmembers.toString());
@@ -126,7 +127,7 @@ class ChatClientHandler implements Runnable {
                             try {
 //                 send the message to the client if it is not the person sending
                                 if (!client.username.equals(member)) {
-                                    client.bufferedWriter.write(s_m[0] + message);
+                                    client.bufferedWriter.write(s_m[0] + ":" + message);
                                     client.bufferedWriter.newLine();
                                     client.bufferedWriter.flush();
                                 }
@@ -147,7 +148,7 @@ class ChatClientHandler implements Runnable {
                         try {
 //                skip the sender
                             if (client.username.equals(to_user)) {
-                                client.bufferedWriter.write(message);
+                                client.bufferedWriter.write(s_m[0] + ":" + message);
                                 client.bufferedWriter.newLine();
                                 client.bufferedWriter.flush();
                             }
@@ -195,7 +196,7 @@ class ChatClientHandler implements Runnable {
 //        System.out.println(s + " is who I am sending to");
 
         if (s.equalsIgnoreCase("All")){
-            return "@All";
+            return "All";
         } else if (s.equalsIgnoreCase("Server")) {
             return "Server";
         } else if (s.equalsIgnoreCase("Group")) {

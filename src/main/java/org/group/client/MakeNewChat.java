@@ -11,12 +11,12 @@ import javax.swing.JOptionPane;
  * @author jesse
  */
 public class MakeNewChat extends javax.swing.JFrame {
-
     FinalProGUI mainScreen;
-
+    String person;
     /**
      * Creates new form MakeNewChat
      */
+    
     public MakeNewChat() {
         initComponents();
     }
@@ -40,15 +40,15 @@ public class MakeNewChat extends javax.swing.JFrame {
         BtnExit = new javax.swing.JButton();
         BtnExitToMain = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        TxtPerson = new javax.swing.JTextField();
+        BtnCreate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Make a private chat");
+        jLabel1.setText("Make a new and private chat");
 
         BtnExit.setBackground(new java.awt.Color(0, 0, 0));
         BtnExit.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -71,38 +71,43 @@ public class MakeNewChat extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setText("Name of contact");
+        jLabel2.setText("name of contact");
 
-        jTextField1.setBackground(new java.awt.Color(0, 0, 0));
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
+        TxtPerson.setBackground(new java.awt.Color(0, 0, 0));
+        TxtPerson.setForeground(new java.awt.Color(255, 255, 255));
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 0));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Create chat");
+        BtnCreate.setBackground(new java.awt.Color(0, 0, 0));
+        BtnCreate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        BtnCreate.setForeground(new java.awt.Color(255, 255, 255));
+        BtnCreate.setText("Create chat");
+        BtnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCreateActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(113, 113, 113)
+                        .addGap(0, 62, Short.MAX_VALUE)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                        .addGap(51, 51, 51)
                         .addComponent(BtnExit))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(BtnExitToMain))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(TxtPerson, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)))
+                                .addComponent(BtnCreate)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -119,8 +124,8 @@ public class MakeNewChat extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(TxtPerson, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnCreate))
                 .addContainerGap(217, Short.MAX_VALUE))
         );
 
@@ -140,8 +145,8 @@ public class MakeNewChat extends javax.swing.JFrame {
 
     private void BtnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExitActionPerformed
         // TODO add your handling code here:
-//        This section confirms that you what to exit
-        int res = JOptionPane.showConfirmDialog(rootPane, "This will exit the application would you like to continue?");
+//      This section confirms that you what to exit compleatly 
+        int res = JOptionPane.showConfirmDialog(rootPane, "This will exit the application, and delete your chats, would you like to continue?");
         if (res == JOptionPane.YES_OPTION) {
             this.dispose();
         } else {
@@ -160,6 +165,14 @@ public class MakeNewChat extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_BtnExitToMainActionPerformed
+
+    private void BtnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCreateActionPerformed
+        // TODO add your handling code here:
+//      This section gets the contact and then opens a new screen
+        person = TxtPerson.getText();
+        FinalProGUI PChat = new FinalProGUI(this);
+        PChat.setVisible(true);
+    }//GEN-LAST:event_BtnCreateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -197,12 +210,12 @@ public class MakeNewChat extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnCreate;
     private javax.swing.JButton BtnExit;
     private javax.swing.JButton BtnExitToMain;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField TxtPerson;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
