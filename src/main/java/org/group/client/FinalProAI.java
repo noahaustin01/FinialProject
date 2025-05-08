@@ -221,7 +221,7 @@ public class FinalProAI extends javax.swing.JFrame {
     private void BtnSendAIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSendAIActionPerformed
         // TODO add your handling code here:
         
-//      This section gives the sends your promt to the AI, it also saves your promts and the AI's responces to allow for a conversation 
+//      This section sends your promt to the AI, it makes your messege a json object 
         history.add("User: " + TxtAIProm.getText());
         String allProms = String.join("\n", history);
         String[] key = {"llama3.2", allProms};

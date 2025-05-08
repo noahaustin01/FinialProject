@@ -86,25 +86,28 @@ class ChatClientHandler implements Runnable {
         System.out.println("At message received from " + username);
 
         String to_user = "All";
+        String message = messageFromClient;
 
         if (isAtMessageReceived(split_message[0])) {
             to_user = checkAtWhoMessage(split_message[0]);
             if (to_user.equalsIgnoreCase("Group")) {
                 groupmembers = findGroup(split_message[1]);
+                message = String.join(" ", Arrays.copyOfRange(split_message, 2, split_message.length));
+            }
+            else{
+                message = String.join(" ", Arrays.copyOfRange(split_message, 1, split_message.length));
             }
             System.out.println("Message sending to " + to_user);
         }
             switch (to_user) {
-                case "Server" -> {
-                    // send message to llm
-                }
-                case "All" -> {
+                // case @All is used in the case that some sends a message with to everyone
+                case "@All" -> {
 //              loop through the clientsLists and send message to the clients except the sender
                     for (ChatClientHandler client : MainServer.clientsList) {
                         try {
 //                 send the message to the client if it is not the person sending
                             if (!client.username.equals(username)) {
-                                client.bufferedWriter.write(messageFromClient);
+                                client.bufferedWriter.write(s_m[0] + message);
                                 client.bufferedWriter.newLine();
                                 client.bufferedWriter.flush();
                             }
@@ -114,15 +117,16 @@ class ChatClientHandler implements Runnable {
                         }
                     }
                 }
+                // case Group will send the incoming message to all the members of a particular group
                 case "Group" -> {
-                    System.out.println("looking at a group: " + groupmembers.toString());
+//                    System.out.println("looking at a group: " + groupmembers.toString());
                     for (String member : groupmembers) {
-                        System.out.println("member: " + member);
+//                        System.out.println("member: " + member);
                         for (ChatClientHandler client : MainServer.clientsList) {
                             try {
 //                 send the message to the client if it is not the person sending
                                 if (!client.username.equals(member)) {
-                                    client.bufferedWriter.write(messageFromClient);
+                                    client.bufferedWriter.write(s_m[0] + message);
                                     client.bufferedWriter.newLine();
                                     client.bufferedWriter.flush();
                                 }
@@ -133,17 +137,17 @@ class ChatClientHandler implements Runnable {
                         }
                     }
                 }
-
+                // case Makegroup is used to make a group for the client to use later
                 case "Makegroup" -> {
                     makeGroup(split_message);
                 }
-
+                // The defalt case is used in the case that there is no @ message received and is just a message for everyone on the server
                 default -> {
                     for (ChatClientHandler client : MainServer.clientsList) {
                         try {
 //                skip the sender
                             if (client.username.equals(to_user)) {
-                                client.bufferedWriter.write(messageFromClient);
+                                client.bufferedWriter.write(message);
                                 client.bufferedWriter.newLine();
                                 client.bufferedWriter.flush();
                             }
@@ -160,29 +164,24 @@ class ChatClientHandler implements Runnable {
     }
 
     private void makeGroup(String[] people) {
-        String groupname = people[1];
-        String[] members = Arrays.copyOfRange(people, 2, people.length);
 
-//        System.out.println("group name : " + groupname);
-        String[] group = Arrays.copyOf(members, members.length + 1);
-        for (int i = 0; i < group.length-1; i++) {
-//            System.out.println("member: " + group[i+1]);
-            group[i+1] = group[i];
-        }
-        group[0] = groupname;
+        // String groupname = people[1]; // gets the group name from the message
+        // String[] members = Arrays.copyOfRange(people, 2, people.length); // gets a list of all the members of the new group
 
-        groups.add(group);
+        // this will add an Array of the groupname and the members of the new group being created and store it in groups.
+        // It will be stored in the form of [groupname, member1, member2, ..., memberN]
+        groups.add(Arrays.copyOfRange(people, 1, people.length));
 
-        System.out.println("New group made");
+//        System.out.println("New group made");
     }
-
+// This function is used to find all of the members of the group the incoming message is being sent to.
     private String[] findGroup(String groupname) {
         String[] groupmembers = null;
-        System.out.println("looking for the group: " + groupname);
+//        System.out.println("looking for the group: " + groupname);
         for (String[] group : groups) {
-            System.out.println(group[0]);
+//            System.out.println(group[0]);
             if (group[0].equalsIgnoreCase(groupname)) {
-                System.out.println("found group");
+//                System.out.println("found group");
                 groupmembers = Arrays.copyOfRange(group, 1, group.length);
             }
         }
@@ -192,11 +191,11 @@ class ChatClientHandler implements Runnable {
     // This function will check to see who the incoming message is being sent to
     private String checkAtWhoMessage(String s) {
 
-        s = s.substring(1);
+        s = s.substring(1); // removes the @ sign from the string
 //        System.out.println(s + " is who I am sending to");
 
         if (s.equalsIgnoreCase("All")){
-            return "All";
+            return "@All";
         } else if (s.equalsIgnoreCase("Server")) {
             return "Server";
         } else if (s.equalsIgnoreCase("Group")) {

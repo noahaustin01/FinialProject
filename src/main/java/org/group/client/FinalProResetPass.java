@@ -199,6 +199,7 @@ public class FinalProResetPass extends javax.swing.JFrame {
 
     private void BtnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnExitActionPerformed
         // TODO add your handling code here:
+//       This section confirms that you what to exit
         int res = JOptionPane.showConfirmDialog(rootPane, "This will exit the application would you like to continue?");
         if (res == JOptionPane.YES_OPTION) {
             this.dispose();

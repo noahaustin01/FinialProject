@@ -98,7 +98,7 @@
                                           <Component id="BtnSend" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="BtnNewChat" min="-2" max="-2" attributes="0"/>
+                                              <Component id="BtnPrivateChat" min="-2" max="-2" attributes="0"/>
                                               <Component id="BtnLeaveChat" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -136,7 +136,7 @@
                       <Group type="102" attributes="0">
                           <Component id="BtnConnect" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
-                          <Component id="BtnNewChat" min="-2" max="-2" attributes="0"/>
+                          <Component id="BtnPrivateChat" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="BtnLeaveChat" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -310,7 +310,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnConnectActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="BtnNewChat">
+        <Component class="javax.swing.JButton" name="BtnPrivateChat">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="0" type="rgb"/>
@@ -324,7 +324,7 @@
             <Property name="text" type="java.lang.String" value="Private chat"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnNewChatActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnPrivateChatActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
